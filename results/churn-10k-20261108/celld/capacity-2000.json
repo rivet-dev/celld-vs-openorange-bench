@@ -1,0 +1,9 @@
+{
+  "platform": "celld",
+  "after_agents": 2000,
+  "started_ms": 1794103441743,
+  "finished_ms": 1794103467508,
+  "stored_bytes": 53712565,
+  "objects": 34798,
+  "method": "Azure Blob listing of the isolated benchmark prefix; outside measured holds"
+}

@@ -1,0 +1,9 @@
+{
+  "runs": [
+    "churn-60s-20261107",
+    "churn-10k-20261108",
+    "churn-25k-20261108",
+    "churn-25k-24nodes-20261108"
+  ],
+  "description": "One-minute churn: six nodes through 10000 agents, twelve at 15000 and 20000, twenty-four at 25000; 24 Rivet tablets throughout."
+}

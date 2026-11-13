@@ -1,0 +1,69 @@
+{
+  "timespan": "2026-11-08T03:48:00Z/2026-11-08T04:01:00Z",
+  "interval": "PT1M",
+  "metrics": [
+    {
+      "name": "Transactions",
+      "unit": "Count",
+      "timeseries": [
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:49:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:50:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:51:00Z",
+              "total": 61747.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:52:00Z",
+              "total": 115905.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:53:00Z",
+              "total": 130063.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:54:00Z",
+              "total": 129362.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:55:00Z",
+              "total": 129946.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:56:00Z",
+              "total": 129814.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:57:00Z",
+              "total": 129670.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:58:00Z",
+              "total": 130035.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:59:00Z",
+              "total": 129729.0
+            },
+            {
+              "timeStamp": "2026-11-08T04:00:00Z",
+              "total": 81343.0
+            }
+          ],
+          "metadatavalues": []
+        }
+      ]
+    }
+  ]
+}

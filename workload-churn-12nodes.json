@@ -1,0 +1,29 @@
+{
+  "levels": [
+    15000,
+    20000,
+    25000
+  ],
+  "settle_seconds": 120,
+  "measure_seconds": 300,
+  "write_interval_ms": 10000,
+  "write_jitter_fraction": 0.2,
+  "payload_bytes": 64,
+  "rows_per_actor": 16,
+  "nodes": 12,
+  "rivet_tablets": 24,
+  "replicas_per_tablet": 3,
+  "maintainers_per_node": 2,
+  "replicas_per_node": 6,
+  "seed": 20261106,
+  "scenario": "churn",
+  "lifetime_ms": 60000,
+  "retirement": "sleep_retain_data",
+  "replacement": "fresh_actor",
+  "celld_idle_evict_seconds": 1,
+  "connection_setup_retries": {
+    "close_code": 1012,
+    "max_retries": 5,
+    "initial_backoff_ms": 100
+  }
+}

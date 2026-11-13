@@ -1,0 +1,97 @@
+{
+  "timespan": "2026-11-08T02:36:00Z/2026-11-08T02:56:00Z",
+  "interval": "PT1M",
+  "metrics": [
+    {
+      "name": "Transactions",
+      "unit": "Count",
+      "timeseries": [
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T02:36:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:37:00Z",
+              "total": 2558.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:38:00Z",
+              "total": 2583.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:39:00Z",
+              "total": 3527.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:40:00Z",
+              "total": 4932.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:41:00Z",
+              "total": 6554.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:42:00Z",
+              "total": 4923.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:43:00Z",
+              "total": 4895.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:44:00Z",
+              "total": 6666.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:45:00Z",
+              "total": 5322.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:46:00Z",
+              "total": 6334.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:47:00Z",
+              "total": 10972.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:48:00Z",
+              "total": 6281.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:49:00Z",
+              "total": 5267.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:50:00Z",
+              "total": 6542.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:51:00Z",
+              "total": 6180.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:52:00Z",
+              "total": 8003.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:53:00Z",
+              "total": 6016.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:54:00Z",
+              "total": 7065.0
+            },
+            {
+              "timeStamp": "2026-11-08T02:55:00Z",
+              "total": 6064.0
+            }
+          ],
+          "metadatavalues": []
+        }
+      ]
+    }
+  ]
+}

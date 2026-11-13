@@ -1,0 +1,111 @@
+{
+  "platform": "celld",
+  "run": "churn-smoke-20261107",
+  "workload": {
+    "levels": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "settle_seconds": 120,
+    "measure_seconds": 300,
+    "write_interval_ms": 10000,
+    "write_jitter_fraction": 0.2,
+    "payload_bytes": 64,
+    "rows_per_actor": 16,
+    "nodes": 6,
+    "rivet_tablets": 24,
+    "replicas_per_tablet": 3,
+    "maintainers_per_node": 4,
+    "replicas_per_node": 12,
+    "seed": 20261106,
+    "scenario": "churn",
+    "lifetime_ms": 60000,
+    "retirement": "sleep_retain_data",
+    "replacement": "fresh_actor"
+  },
+  "stages": [
+    {
+      "actors": 8,
+      "start_ms": 1794085387993,
+      "before": [
+        {
+          "timestamp_ms": 1794085389731,
+          "platform": "celld",
+          "shard": "0",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 18,
+          "errors": 0,
+          "connect_errors": 0,
+          "created": 5,
+          "retired": 1,
+          "opening": 0,
+          "retiring": 0,
+          "ready_slots": 4
+        },
+        {
+          "timestamp_ms": 1794085389735,
+          "platform": "celld",
+          "shard": "1",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 15,
+          "errors": 0,
+          "connect_errors": 0,
+          "created": 4,
+          "retired": 0,
+          "opening": 0,
+          "retiring": 0,
+          "ready_slots": 4
+        }
+      ],
+      "end_ms": 1794085517993,
+      "after": [
+        {
+          "timestamp_ms": 1794085519728,
+          "platform": "celld",
+          "shard": "0",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 70,
+          "errors": 0,
+          "connect_errors": 0,
+          "created": 14,
+          "retired": 10,
+          "opening": 0,
+          "retiring": 0,
+          "ready_slots": 4
+        },
+        {
+          "timestamp_ms": 1794085519728,
+          "platform": "celld",
+          "shard": "1",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 70,
+          "errors": 0,
+          "connect_errors": 0,
+          "created": 13,
+          "retired": 9,
+          "opening": 0,
+          "retiring": 0,
+          "ready_slots": 4
+        }
+      ],
+      "counter_delta_writes": 107
+    }
+  ],
+  "started_ms": 1794085226189,
+  "complete": true,
+  "finished_ms": 1794085522797
+}

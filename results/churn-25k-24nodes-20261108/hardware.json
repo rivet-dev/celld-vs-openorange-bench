@@ -1,0 +1,261 @@
+{
+  "region": "eastus2",
+  "availability_zone": "1",
+  "nodes": [
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-1",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427557376,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-2",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427553280,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-3",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-4",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427569664,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-5",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427561472,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-6",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-7",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-8",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427569664,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-9",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-10",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427573760,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-11",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-12",
+      "size": "Standard_D16as_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-13",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427561472,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-14",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-15",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-16",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-17",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427569664,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-18",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-19",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427561472,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-20",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427569664,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-21",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-22",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427561472,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-23",
+      "size": "Standard_D16ads_v7"
+    },
+    {
+      "cpu_count": 16,
+      "cpu_model": "AMD EPYC 9V45 96-Core Processor",
+      "memory_total_bytes": 67427565568,
+      "architecture": "x86_64",
+      "kernel": "6.12.113+deb13-cloud-amd64",
+      "data_uses_attached_lun_0": true,
+      "name": "engine-24",
+      "size": "Standard_D16ads_v7"
+    }
+  ],
+  "data_disk": {
+    "sku": "PremiumV2_LRS",
+    "gib": 1024,
+    "iops": 20000,
+    "mbps": 900
+  },
+  "load_generators": {
+    "count": 2,
+    "sku": "Standard_D8as_v7"
+  },
+  "storage": {
+    "provider": "Azure Blob",
+    "sku": "Standard_LRS",
+    "accounts": "one dedicated account per platform"
+  }
+}

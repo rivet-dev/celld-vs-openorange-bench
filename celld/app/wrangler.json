@@ -1,0 +1,9 @@
+{
+  "name": "storage-cost-benchmark",
+  "main": "index.ts",
+  "compatibility_date": "2026-10-01",
+  "durable_objects": {
+    "bindings": [{ "name": "ACTORS", "class_name": "LoadActor" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["LoadActor"] }]
+}

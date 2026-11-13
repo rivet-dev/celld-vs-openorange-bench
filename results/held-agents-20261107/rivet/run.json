@@ -1,0 +1,465 @@
+{
+  "platform": "rivet",
+  "run": "held-agents-20261107",
+  "workload": {
+    "levels": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "settle_seconds": 60,
+    "measure_seconds": 300,
+    "write_interval_ms": 10000,
+    "write_jitter_fraction": 0.2,
+    "payload_bytes": 64,
+    "rows_per_actor": 16,
+    "nodes": 6,
+    "rivet_tablets": 24,
+    "replicas_per_tablet": 3,
+    "maintainers_per_node": 4,
+    "replicas_per_node": 12,
+    "seed": 20261106
+  },
+  "stages": [
+    {
+      "actors": 8,
+      "start_ms": 1794025980000,
+      "before": [
+        {
+          "timestamp_ms": 1794025981816,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 45,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794025981807,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 45,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794026280000,
+      "after": [
+        {
+          "timestamp_ms": 1794026281826,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 163,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794026281819,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 8,
+          "target": 4,
+          "connected": 4,
+          "writes": 166,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 239
+    },
+    {
+      "actors": 16,
+      "start_ms": 1794026400000,
+      "before": [
+        {
+          "timestamp_ms": 1794026401690,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 16,
+          "target": 8,
+          "connected": 8,
+          "writes": 260,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794026401695,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 16,
+          "target": 8,
+          "connected": 8,
+          "writes": 262,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794026700000,
+      "after": [
+        {
+          "timestamp_ms": 1794026701816,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 16,
+          "target": 8,
+          "connected": 8,
+          "writes": 502,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794026701809,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 16,
+          "target": 8,
+          "connected": 8,
+          "writes": 498,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 478
+    },
+    {
+      "actors": 32,
+      "start_ms": 1794026820000,
+      "before": [
+        {
+          "timestamp_ms": 1794026821756,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 32,
+          "target": 16,
+          "connected": 16,
+          "writes": 691,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794026821756,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 32,
+          "target": 16,
+          "connected": 16,
+          "writes": 692,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794027120000,
+      "after": [
+        {
+          "timestamp_ms": 1794027121838,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 32,
+          "target": 16,
+          "connected": 16,
+          "writes": 1170,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794027121826,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 32,
+          "target": 16,
+          "connected": 16,
+          "writes": 1175,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 962
+    },
+    {
+      "actors": 64,
+      "start_ms": 1794027240000,
+      "before": [
+        {
+          "timestamp_ms": 1794027241822,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 64,
+          "target": 32,
+          "connected": 32,
+          "writes": 1543,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794027241821,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 64,
+          "target": 32,
+          "connected": 32,
+          "writes": 1553,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794027540000,
+      "after": [
+        {
+          "timestamp_ms": 1794027541831,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 64,
+          "target": 32,
+          "connected": 32,
+          "writes": 2505,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794027541832,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 64,
+          "target": 32,
+          "connected": 32,
+          "writes": 2512,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 1921
+    },
+    {
+      "actors": 128,
+      "start_ms": 1794027660000,
+      "before": [
+        {
+          "timestamp_ms": 1794027661823,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 128,
+          "target": 64,
+          "connected": 64,
+          "writes": 3259,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794027661828,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 128,
+          "target": 64,
+          "connected": 64,
+          "writes": 3277,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794027960000,
+      "after": [
+        {
+          "timestamp_ms": 1794027961846,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 128,
+          "target": 64,
+          "connected": 64,
+          "writes": 5175,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794027961818,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 128,
+          "target": 64,
+          "connected": 64,
+          "writes": 5199,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 3838
+    },
+    {
+      "actors": 256,
+      "start_ms": 1794028080000,
+      "before": [
+        {
+          "timestamp_ms": 1794028081827,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 256,
+          "target": 128,
+          "connected": 128,
+          "writes": 6684,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794028081815,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 256,
+          "target": 128,
+          "connected": 128,
+          "writes": 6726,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794028380000,
+      "after": [
+        {
+          "timestamp_ms": 1794028381830,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 256,
+          "target": 128,
+          "connected": 128,
+          "writes": 10517,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794028381826,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 256,
+          "target": 128,
+          "connected": 128,
+          "writes": 10565,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 7672
+    },
+    {
+      "actors": 512,
+      "start_ms": 1794028500000,
+      "before": [
+        {
+          "timestamp_ms": 1794028500912,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 512,
+          "target": 256,
+          "connected": 256,
+          "writes": 13499,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794028500912,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 512,
+          "target": 256,
+          "connected": 256,
+          "writes": 13585,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794028800000,
+      "after": [
+        {
+          "timestamp_ms": 1794028801838,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 512,
+          "target": 256,
+          "connected": 256,
+          "writes": 21199,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794028801838,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 512,
+          "target": 256,
+          "connected": 256,
+          "writes": 21276,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 15391
+    },
+    {
+      "actors": 1024,
+      "start_ms": 1794028920000,
+      "before": [
+        {
+          "timestamp_ms": 1794028921195,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 1024,
+          "target": 512,
+          "connected": 512,
+          "writes": 27133,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794028921199,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 1024,
+          "target": 512,
+          "connected": 512,
+          "writes": 27245,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "end_ms": 1794029220000,
+      "after": [
+        {
+          "timestamp_ms": 1794029221925,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 1024,
+          "target": 512,
+          "connected": 512,
+          "writes": 42509,
+          "errors": 0,
+          "connect_errors": 0
+        },
+        {
+          "timestamp_ms": 1794029221824,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 1024,
+          "target": 512,
+          "connected": 512,
+          "writes": 42640,
+          "errors": 0,
+          "connect_errors": 0
+        }
+      ],
+      "counter_delta_writes": 30771
+    }
+  ],
+  "started_ms": 1794025863075,
+  "complete": true,
+  "finished_ms": 1794029227965
+}

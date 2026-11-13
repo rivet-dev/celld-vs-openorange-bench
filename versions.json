@@ -1,0 +1,8 @@
+{
+  "rivet_engine": "3.0.0-preview.2",
+  "rivetkit": "3.0.0-preview.2",
+  "celld": "0.6.3",
+  "celld_commit": "8702f6d186c77698dbfb30cf29e3b1922a88f008",
+  "node": "24.10.0",
+  "pnpm": "10.13.1"
+}

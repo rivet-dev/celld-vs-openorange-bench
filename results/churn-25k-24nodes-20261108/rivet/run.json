@@ -1,0 +1,126 @@
+{
+  "platform": "rivet",
+  "run": "churn-25k-24nodes-20261108",
+  "workload": {
+    "levels": [
+      25000
+    ],
+    "settle_seconds": 120,
+    "measure_seconds": 300,
+    "write_interval_ms": 10000,
+    "write_jitter_fraction": 0.2,
+    "payload_bytes": 64,
+    "rows_per_actor": 16,
+    "nodes": 24,
+    "rivet_tablets": 24,
+    "replicas_per_tablet": 3,
+    "maintainers_per_node": 1,
+    "replicas_per_node": 3,
+    "seed": 20261106,
+    "scenario": "churn",
+    "lifetime_ms": 60000,
+    "retirement": "sleep_retain_data",
+    "replacement": "fresh_actor",
+    "celld_idle_evict_seconds": 1,
+    "connection_setup_retries": {
+      "close_code": 1012,
+      "max_retries": 5,
+      "initial_backoff_ms": 100
+    },
+    "rivet_tokio_worker_threads": 1
+  },
+  "node_count": 24,
+  "loadgen_count": 2,
+  "stages": [
+    {
+      "actors": 25000,
+      "node_count": 24,
+      "start_ms": 1794109380000,
+      "before": [
+        {
+          "timestamp_ms": 1794109381712,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 25000,
+          "target": 12500,
+          "connected": 12497,
+          "writes": 259503,
+          "errors": 0,
+          "connect_errors": 0,
+          "connect_retries": 0,
+          "created": 49418,
+          "retired": 36921,
+          "opening": 3,
+          "retiring": 1,
+          "retrying": 0,
+          "ready_slots": 12500
+        },
+        {
+          "timestamp_ms": 1794109381711,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 25000,
+          "target": 12500,
+          "connected": 12497,
+          "writes": 259326,
+          "errors": 0,
+          "connect_errors": 0,
+          "connect_retries": 0,
+          "created": 49395,
+          "retired": 36898,
+          "opening": 3,
+          "retiring": 3,
+          "retrying": 0,
+          "ready_slots": 12500
+        }
+      ],
+      "end_ms": 1794109680000,
+      "after": [
+        {
+          "timestamp_ms": 1794109681716,
+          "platform": "rivet",
+          "shard": "0",
+          "level": 25000,
+          "target": 12500,
+          "connected": 12498,
+          "writes": 634810,
+          "errors": 0,
+          "connect_errors": 0,
+          "connect_retries": 0,
+          "created": 111889,
+          "retired": 99391,
+          "opening": 2,
+          "retiring": 2,
+          "retrying": 0,
+          "ready_slots": 12500
+        },
+        {
+          "timestamp_ms": 1794109681709,
+          "platform": "rivet",
+          "shard": "1",
+          "level": 25000,
+          "target": 12500,
+          "connected": 12495,
+          "writes": 634605,
+          "errors": 0,
+          "connect_errors": 0,
+          "connect_retries": 0,
+          "created": 111860,
+          "retired": 99365,
+          "opening": 5,
+          "retiring": 8,
+          "retrying": 0,
+          "ready_slots": 12500
+        }
+      ],
+      "counter_delta_writes": 750586
+    }
+  ],
+  "started_ms": 1794109136250,
+  "complete": true,
+  "node_sizes": {
+    "Standard_D16as_v7": 12,
+    "Standard_D16ads_v7": 12
+  },
+  "finished_ms": 1794109696687
+}

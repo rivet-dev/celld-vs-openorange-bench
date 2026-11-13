@@ -1,0 +1,8 @@
+{
+  "currency": "USD",
+  "hours_per_month": 730,
+  "get_head_per_1000": 0.0004,
+  "put_list_per_1000": 0.005,
+  "delete_per_1000": 0,
+  "storage_per_decimal_tb_month": 18.4
+}

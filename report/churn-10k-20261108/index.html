@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rivet vs celld storage request cost</title>
+<style>
+:root{color-scheme:light;--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--ring:rgba(11,11,11,.10);--band:rgba(11,11,11,.035);--link:#1c5cab;
+--rivet:#2a78d6;--celld:#eb6834;--put:#6250d6;--list:#e87ba4;--get:#eda100;--other:#898781;--free:#c3c2b7;--on-get:#0b0b0b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--page:#0d0d0d;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);--band:rgba(255,255,255,.035);--link:#86b6ef;
+--rivet:#3987e5;--celld:#d95926;--put:#9085e9;--list:#d55181;--get:#c98500;--other:#898781;--free:#52514e;--on-get:#fff}}
+:root[data-theme="dark"]{color-scheme:dark;--page:#0d0d0d;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);--band:rgba(255,255,255,.035);--link:#86b6ef;
+--rivet:#3987e5;--celld:#d95926;--put:#9085e9;--list:#d55181;--get:#c98500;--other:#898781;--free:#52514e;--on-get:#fff}
+*{box-sizing:border-box}
+html{background:var(--page)}
+body{margin:0;background:var(--page);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:40px 16px 64px}
+a{color:var(--link)}
+h1{font-size:34px;line-height:1.15;margin:6px 0 18px;letter-spacing:-.01em}
+h2{font-size:22px;margin:48px 0 6px}
+h3{font-size:15px;margin:0}
+p{margin:8px 0;color:var(--ink2);max-width:820px}
+p strong,li strong{color:var(--ink)}
+.card{background:var(--surface);border-radius:12px;box-shadow:0 0 0 1px var(--ring);padding:20px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 8px}
+.tiles-title{grid-column:1/-1;margin:20px 0 0;font-size:13px;color:var(--muted)}
+.workload{font-size:15px}
+.look{margin:4px 0 10px}
+.raw{margin-top:48px}
+.raw h3{margin:22px 0 0}
+footer{margin-top:40px;padding-top:12px;border-top:1px solid var(--grid)}
+footer p{font-size:13px;color:var(--muted);max-width:none}
+.tile{background:var(--surface);border-radius:12px;box-shadow:0 0 0 1px var(--ring);padding:16px 18px}
+.tile .label{font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:8px}
+.tile .value{font-size:34px;font-weight:600;line-height:1.2;margin-top:4px}
+.tile .sub{font-size:13px;color:var(--muted)}
+.key{display:inline-block;width:14px;height:2px;border-radius:1px;flex:none}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:3px;flex:none}
+.note{font-size:13px;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:18px 0 6px;position:sticky;top:0;z-index:5;background:var(--page);padding:10px 0;border-bottom:1px solid var(--grid)}
+.seg{display:inline-flex;border-radius:8px;box-shadow:0 0 0 1px var(--ring);overflow:hidden}
+.seg button{font:inherit;font-size:13px;border:0;background:var(--surface);color:var(--ink2);padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--page)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);margin:10px 0 4px;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:6px}
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;overflow:visible}
+.chart svg:focus{outline:none}
+.chart svg:focus-visible{outline:2px solid var(--link);outline-offset:4px;border-radius:6px}
+.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.panel{background:var(--surface);border-radius:12px;box-shadow:0 0 0 1px var(--ring);padding:14px 14px 6px}
+.panel .ptitle{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.panel .ptitle span{font-size:12px;color:var(--muted)}
+.stack-panels{display:grid;gap:12px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--ring),0 6px 24px rgba(0,0,0,.18);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.4;min-width:170px;z-index:4;display:none}
+.tip .tt{color:var(--ink2);margin-bottom:4px}
+.tip .row{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.tip .row b{font-weight:600;font-variant-numeric:tabular-nums}
+.tip .row span{color:var(--ink2)}
+.tip .foot{margin-top:4px;padding-top:4px;border-top:1px solid var(--grid);color:var(--ink2)}
+.share{display:grid;gap:10px;margin:14px 0}
+.share .name{font-size:13px;color:var(--ink2);margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
+.share .bar{display:flex;gap:2px;height:28px}
+.share .bar div{border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:visible;min-width:0}
+.table{overflow-x:auto;margin:10px 0;border-radius:12px;box-shadow:0 0 0 1px var(--ring);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--grid)}
+th{color:var(--ink2);font-weight:600;vertical-align:bottom}
+thead tr:first-child th{border-bottom:0;padding-bottom:0;color:var(--muted);font-weight:500;font-size:12px}
+thead th[colspan]{text-align:center}
+td:first-child,th:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+tr.total td{font-weight:600;color:var(--ink)}
+td.dim{color:var(--muted)}
+td .note{font-size:11px;white-space:normal}
+details{margin:14px 0}
+summary{cursor:pointer;color:var(--ink);font-weight:600}
+code{font-size:13px}
+@media (max-width:760px){.controls{position:static}.panels{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}h1{font-size:28px}.tile .value{font-size:30px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Rivet vs celld: object-storage request cost</h1>
+<p class="workload">Each agent stays awake <strong>60 s</strong>, makes <strong>one SQLite write every 10 s</strong>, then sleeps with its data kept and is replaced by a fresh agent. Each level settles 120 s, then 5 minutes are measured.</p>
+<div class="tiles"><p class="tiles-title">At 10,000 concurrent agents</p><div class="tile"><div class="label"><span class="key" style="background:var(--celld)"></span>celld Durable Objects</div><div class="value">$9,007<span class="sub"> / month</span></div></div><div class="tile"><div class="label"><span class="key" style="background:var(--rivet)"></span>Rivet Actors</div><div class="value">$259<span class="sub"> / month</span></div></div><div class="tile"><div class="label">celld ÷ Rivet</div><div class="value">34.8×</div></div></div>
+
+<div class="controls" role="group" aria-label="Chart options">
+<div class="seg" data-control="mode"><button type="button" data-value="cost" aria-pressed="true">Monthly cost</button><button type="button" data-value="requests" aria-pressed="false">Requests / min</button></div>
+</div>
+
+<h2>Cost vs concurrent agents</h2>
+<p class="look"><strong>Look at:</strong> celld rises in a straight line, about <strong>$0.90 per agent per month</strong>. Rivet stays between $226 and $259 from 2,000 to 10,000 agents on 6 nodes and rises mostly where nodes are added.</p>
+<ul class="legend"><li><span class="key" style="background:var(--celld)"></span>celld Durable Objects</li><li><span class="key" style="background:var(--rivet)"></span>Rivet Actors</li></ul>
+<div class="chart" id="chart-scaling"></div>
+
+<h2>Cost by Azure API</h2>
+<p class="look"><strong>Look at:</strong> celld is almost all <strong>PutBlob + ListBlobs</strong> at the expensive PUT/LIST rate: 2.0–2.1 PutBlob and 2.0 ListBlobs per agent lifetime at every level from 5,000 up. Rivet is a sliver on the same y-axis; the bars below show its split, mostly <strong>PutBlob + GetBlob</strong>.</p>
+<ul class="legend"><li><span class="swatch" style="background:var(--put)"></span>PutBlob</li><li><span class="swatch" style="background:var(--list)"></span>ListBlobs</li><li><span class="swatch" style="background:var(--get)"></span>GetBlob</li><li><span class="swatch" style="background:var(--other)"></span>Other billed</li><li><span class="swatch" style="background:var(--free)"></span>Deletes (free)</li></ul>
+<div class="panels" id="chart-breakdown"></div>
+<h3 style="margin-top:22px">Share of cost at 10,000 concurrent agents</h3>
+<div class="share"><div><div class="name"><span>celld Durable Objects</span><span>$9,007/month</span></div><div class="bar" role="img" aria-label="celld Durable Objects cost share by API"><div style="flex:0.493043 1 0;background:var(--put);color:#fff" title="PutBlob: $4,441/month, 49.3%">PutBlob 49%</div><div style="flex:0.486692 1 0;background:var(--list);color:#fff" title="ListBlobs: $4,383/month, 48.7%">ListBlobs 49%</div><div style="flex:0.020265 1 0;background:var(--get);color:var(--on-get)" title="GetBlob: $183/month, 2.0%"></div></div></div><div><div class="name"><span>Rivet Actors</span><span>$259/month</span></div><div class="bar" role="img" aria-label="Rivet Actors cost share by API"><div style="flex:0.668706 1 0;background:var(--put);color:#fff" title="PutBlob: $173/month, 66.9%">PutBlob 67%</div><div style="flex:0.030419 1 0;background:var(--list);color:#fff" title="ListBlobs: $7.88/month, 3.0%"></div><div style="flex:0.257248 1 0;background:var(--get);color:var(--on-get)" title="GetBlob: $66.67/month, 25.7%">GetBlob 26%</div><div style="flex:0.043627 1 0;background:var(--other);color:#fff" title="Other billed: $11.31/month, 4.4%">4%</div></div></div></div>
+
+<h2>Every measured minute</h2>
+<p class="look"><strong>Look at:</strong> Raw one-minute Azure counters, five per level, on the same y-axis. Rivet's most expensive single minute ($327/month equivalent) barely leaves the baseline next to celld's $9,007 at 10,000 agents.</p>
+<div class="stack-panels" id="chart-minutes"></div>
+
+<details class="raw"><summary>Raw data</summary>
+<h3>Monthly cost and requests per level</h3>
+<div class="table"><table><thead><tr><th>Concurrent agents</th><th>Nodes</th><th>celld cost / month</th><th>Rivet cost / month</th><th>celld ÷ Rivet</th><th>celld requests / min</th><th>Rivet requests / min</th></tr></thead><tbody><tr><td>2,000</td><td>6</td><td>$1,872</td><td>$226</td><td>8.3×</td><td>10,975</td><td>3,923</td></tr><tr><td>5,000</td><td>6</td><td>$4,547</td><td>$232</td><td>19.6×</td><td>26,007</td><td>4,072</td></tr><tr><td>10,000</td><td>6</td><td>$9,007</td><td>$259</td><td>34.8×</td><td>50,903</td><td>4,685</td></tr></tbody></table></div>
+<h3>Requests and cost per agent lifetime at 10,000 agents</h3><div class="table"><table><thead><tr><th></th><th></th><th colspan="3">celld Durable Objects</th><th colspan="3">Rivet Actors</th></tr><tr><th>Azure API</th><th>S3 rate</th><th>Per lifetime</th><th>Cost / month</th><th>Share</th><th>Per lifetime</th><th>Cost / month</th><th>Share</th></tr></thead><tbody><tr><td>PutBlob</td><td>$0.005 / 1k</td><td>2.03</td><td>$4,441</td><td>49%</td><td>0.079</td><td>$173</td><td>67%</td></tr><tr><td>ListBlobs</td><td>$0.005 / 1k</td><td>2.00</td><td>$4,383</td><td>49%</td><td>0.004</td><td>$7.88</td><td>3%</td></tr><tr><td>GetBlob</td><td>$0.0004 / 1k</td><td>1.04</td><td>$183</td><td>2%</td><td>0.38</td><td>$66.67</td><td>26%</td></tr><tr><td>Other billed<div class="note">GetBlobProperties, PutBlock, PutBlockList</div></td><td>$0.005 or $0.0004 / 1k</td><td>0</td><td>$0.00</td><td>0%</td><td>0.005</td><td>$11.31</td><td>4%</td></tr><tr><td>Deletes (free)<div class="note">BatchDeleteBlob, BatchRequest</div></td><td>free</td><td>0.019</td><td>$0.00</td><td>0%</td><td>0</td><td>$0.00</td><td>0%</td></tr><tr class="total"><td>Total</td><td></td><td>5.10</td><td>$9,007</td><td>100%</td><td>0.47</td><td>$259</td><td>100%</td></tr></tbody></table></div>
+<h3 style="margin-top:22px">celld Durable Objects: every five-minute hold</h3><div class="table"><table><thead><tr><th colspan="4"></th><th colspan="2">GET/HEAD · $0.0004 / 1k</th><th colspan="4">PUT/LIST · $0.005 / 1k</th><th colspan="2">Deletes · free</th><th colspan="5"></th></tr><tr><th>Agents</th><th>Nodes</th><th>Request cost / month</th><th>1-minute range</th><th>GetBlob</th><th>GetBlobProperties</th><th>PutBlob</th><th>ListBlobs</th><th>PutBlock</th><th>PutBlockList</th><th>BatchDeleteBlob</th><th>BatchRequest</th><th>Requests per lifetime</th><th>SQLite writes</th><th>Lifetimes</th><th>Stored GB</th><th>Storage / month</th></tr></thead><tbody><tr><td>2,000</td><td>6</td><td><strong>$1,872</strong></td><td>$1,871–$1,874</td><td>12,139</td><td class="dim">0</td><td>21,542</td><td>20,233</td><td class="dim">0</td><td class="dim">0</td><td>900</td><td>60</td><td>5.49</td><td>60,071</td><td>9,987</td><td>0.05</td><td>$0.0010</td></tr><tr><td>5,000</td><td>6</td><td><strong>$4,547</strong></td><td>$4,537–$4,556</td><td>27,449</td><td class="dim">0</td><td>51,454</td><td>50,173</td><td class="dim">0</td><td class="dim">0</td><td>899</td><td>60</td><td>5.20</td><td>150,165</td><td>24,987</td><td>0.19</td><td>$0.0035</td></tr><tr><td>10,000</td><td>6</td><td><strong>$9,007</strong></td><td>$8,996–$9,015</td><td>52,090</td><td class="dim">0</td><td>101,385</td><td>100,079</td><td class="dim">0</td><td class="dim">0</td><td>900</td><td>60</td><td>5.10</td><td>300,097</td><td>49,953</td><td>0.53</td><td>$0.0098</td></tr></tbody></table></div><h3 style="margin-top:22px">Rivet Actors: every five-minute hold</h3><div class="table"><table><thead><tr><th colspan="4"></th><th colspan="2">GET/HEAD · $0.0004 / 1k</th><th colspan="4">PUT/LIST · $0.005 / 1k</th><th colspan="2">Deletes · free</th><th colspan="5"></th></tr><tr><th>Agents</th><th>Nodes</th><th>Request cost / month</th><th>1-minute range</th><th>GetBlob</th><th>GetBlobProperties</th><th>PutBlob</th><th>ListBlobs</th><th>PutBlock</th><th>PutBlockList</th><th>BatchDeleteBlob</th><th>BatchRequest</th><th>Requests per lifetime</th><th>SQLite writes</th><th>Lifetimes</th><th>Stored GB</th><th>Storage / month</th></tr></thead><tbody><tr><td>2,000</td><td>6</td><td><strong>$226</strong></td><td>$205–$254</td><td>15,719</td><td class="dim">0</td><td>3,718</td><td>180</td><td class="dim">0</td><td class="dim">0</td><td class="dim">0</td><td class="dim">0</td><td>1.96</td><td>60,061</td><td>9,995</td><td>0.59</td><td>$0.01</td></tr><tr><td>5,000</td><td>6</td><td><strong>$232</strong></td><td>$208–$262</td><td>16,378</td><td class="dim">0</td><td>3,772</td><td>180</td><td>20</td><td>10</td><td class="dim">0</td><td class="dim">0</td><td>0.81</td><td>150,189</td><td>24,986</td><td>2.61</td><td>$0.05</td></tr><tr><td>10,000</td><td>6</td><td><strong>$259</strong></td><td>$216–$327</td><td>19,028</td><td>2</td><td>3,957</td><td>180</td><td>172</td><td>86</td><td class="dim">0</td><td class="dim">0</td><td>0.47</td><td>300,312</td><td>49,975</td><td>6.93</td><td>$0.13</td></tr></tbody></table></div>
+
+<h3>Recorded one-minute lifetimes</h3><div class="table"><table><thead><tr><th>Target concurrency</th><th>Platform</th><th>Mean connected</th><th>Completed in five minutes</th><th>Lifetime range (s)</th><th>Agents created by end</th><th>Connection retries</th></tr></thead><tbody><tr><td>2,000</td><td>Rivet Actors</td><td>1,999.65</td><td>9,995</td><td>60.000–60.002</td><td>17,732</td><td>0</td></tr><tr><td>5,000</td><td>Rivet Actors</td><td>4,998.88</td><td>24,986</td><td>60.000–60.004</td><td>62,202</td><td>1</td></tr><tr><td>10,000</td><td>Rivet Actors</td><td>9,996.84</td><td>49,975</td><td>60.000–60.005</td><td>151,010</td><td>6</td></tr><tr><td>2,000</td><td>celld Durable Objects</td><td>1,998.42</td><td>9,987</td><td>60.000–60.325</td><td>17,932</td><td>0</td></tr><tr><td>5,000</td><td>celld Durable Objects</td><td>4,995.26</td><td>24,987</td><td>60.000–60.846</td><td>61,292</td><td>0</td></tr><tr><td>10,000</td><td>celld Durable Objects</td><td>9,988.55</td><td>49,953</td><td>60.000–60.604</td><td>166,266</td><td>0</td></tr></tbody></table></div>
+<h3>Full run timeline</h3><img src="timeline.svg" alt="Connected agents, completed lifetimes, Azure requests and repriced cost over elapsed time" style="width:100%;height:auto;border-radius:12px">
+</details>
+
+<footer><p>Measured Azure Blob requests priced at S3 rates (GET/HEAD $0.0004, PUT/LIST $0.005 per 1,000, deletes free), projected to 730 hours. Not an AWS or Azure bill. Compute, egress and storage are excluded; stored-byte snapshots price at $0.13/month or less.</p><p>Both platforms ran on the same Azure machines at each level (6 nodes at 2,000–10,000; 16 vCPU, 64 GB each). Rivet keeps 3 replicas of every write. Rivet Engine 3.0.0-preview.2, celld 0.6.3.</p></footer>
+</main>
+
+<script type="application/json" id="data">{"xmax":10400.0,"platforms":[{"key":"celld","label":"celld Durable Objects","short":"celld"},{"key":"rivet","label":"Rivet Actors","short":"Rivet"}],"groups":[{"key":"PutBlob","label":"PutBlob","color":"put"},{"key":"ListBlobs","label":"ListBlobs","color":"list"},{"key":"GetBlob","label":"GetBlob","color":"get"},{"key":"other","label":"Other billed","color":"other"},{"key":"free","label":"Deletes (free)","color":"free"}],"levels":[{"agents":2000,"nodes":6,"celld":{"groups":{"PutBlob":{"per_min":4308.4,"monthly":943.5396000000001},"ListBlobs":{"per_min":4046.6,"monthly":886.2054},"GetBlob":{"per_min":2427.8,"monthly":42.535056},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10974.8,"monthly":1872.2800559999998,"monthly_min":1871.10972,"monthly_max":1874.28084},"rivet":{"groups":{"PutBlob":{"per_min":743.6,"monthly":162.8484},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3143.8,"monthly":55.079376},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3923.4,"monthly":225.811776,"monthly_min":204.6336,"monthly_max":254.05751999999998}},{"agents":5000,"nodes":6,"celld":{"groups":{"PutBlob":{"per_min":10290.8,"monthly":2253.6852},"ListBlobs":{"per_min":10034.6,"monthly":2197.5774},"GetBlob":{"per_min":5489.8,"monthly":96.181296},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":191.8,"monthly":0.0}},"req_per_min":26007.0,"monthly":4547.443896,"monthly_min":4537.2332400000005,"monthly_max":4555.751880000001},"rivet":{"groups":{"PutBlob":{"per_min":754.4,"monthly":165.21359999999999},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3275.6,"monthly":57.38851200000001},"other":{"per_min":6.0,"monthly":1.3140000000000003},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4072.0,"monthly":231.800112,"monthly_min":208.4442,"monthly_max":262.30068}},{"agents":10000,"nodes":6,"celld":{"groups":{"PutBlob":{"per_min":20277.0,"monthly":4440.663},"ListBlobs":{"per_min":20015.8,"monthly":4383.4602},"GetBlob":{"per_min":10418.0,"monthly":182.52336},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":50902.8,"monthly":9006.646560000001,"monthly_min":8995.714080000002,"monthly_max":9014.93352},"rivet":{"groups":{"PutBlob":{"per_min":791.4,"monthly":173.31660000000002},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3805.6,"monthly":66.674112},"other":{"per_min":52.0,"monthly":11.307408},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4685.0,"monthly":259.18212,"monthly_min":215.64491999999998,"monthly_max":326.66916000000003}}],"minutes":{"celld":[{"groups":{"PutBlob":{"per_min":4310.0,"monthly":943.89},"ListBlobs":{"per_min":4046.0,"monthly":886.0740000000001},"GetBlob":{"per_min":2438.0,"monthly":42.71376},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10986.0,"agents":2000,"monthly":1872.67776,"req":10986,"utc":"2026-11-08 01:59"},{"groups":{"PutBlob":{"per_min":4307.0,"monthly":943.233},"ListBlobs":{"per_min":4047.0,"monthly":886.293},"GetBlob":{"per_min":2412.0,"monthly":42.25824},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10958.0,"agents":2000,"monthly":1871.78424,"req":10958,"utc":"2026-11-08 02:00"},{"groups":{"PutBlob":{"per_min":4307.0,"monthly":943.233},"ListBlobs":{"per_min":4042.0,"monthly":885.1980000000001},"GetBlob":{"per_min":2436.0,"monthly":42.678720000000006},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10977.0,"agents":2000,"monthly":1871.10972,"req":10977,"utc":"2026-11-08 02:01"},{"groups":{"PutBlob":{"per_min":4305.0,"monthly":942.7950000000001},"ListBlobs":{"per_min":4046.0,"monthly":886.0740000000001},"GetBlob":{"per_min":2436.0,"monthly":42.678720000000006},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10979.0,"agents":2000,"monthly":1871.54772,"req":10979,"utc":"2026-11-08 02:02"},{"groups":{"PutBlob":{"per_min":4313.0,"monthly":944.547},"ListBlobs":{"per_min":4052.0,"monthly":887.388},"GetBlob":{"per_min":2417.0,"monthly":42.345839999999995},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":10974.0,"agents":2000,"monthly":1874.28084,"req":10974,"utc":"2026-11-08 02:03"},{"groups":{"PutBlob":{"per_min":10266.0,"monthly":2248.254},"ListBlobs":{"per_min":10011.0,"monthly":2192.409},"GetBlob":{"per_min":5512.0,"monthly":96.57024000000001},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":25981.0,"agents":5000,"monthly":4537.2332400000005,"req":25981,"utc":"2026-11-08 02:08"},{"groups":{"PutBlob":{"per_min":10318.0,"monthly":2259.6420000000003},"ListBlobs":{"per_min":10051.0,"monthly":2201.169},"GetBlob":{"per_min":5419.0,"monthly":94.94087999999999},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":25980.0,"agents":5000,"monthly":4555.751880000001,"req":25980,"utc":"2026-11-08 02:09"},{"groups":{"PutBlob":{"per_min":10292.0,"monthly":2253.948},"ListBlobs":{"per_min":10033.0,"monthly":2197.227},"GetBlob":{"per_min":5534.0,"monthly":96.95568},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":190.0,"monthly":0.0}},"req_per_min":26049.0,"agents":5000,"monthly":4548.13068,"req":26049,"utc":"2026-11-08 02:10"},{"groups":{"PutBlob":{"per_min":10292.0,"monthly":2253.948},"ListBlobs":{"per_min":10042.0,"monthly":2199.198},"GetBlob":{"per_min":5511.0,"monthly":96.55272000000001},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":26037.0,"agents":5000,"monthly":4549.698719999999,"req":26037,"utc":"2026-11-08 02:11"},{"groups":{"PutBlob":{"per_min":10286.0,"monthly":2252.634},"ListBlobs":{"per_min":10036.0,"monthly":2197.884},"GetBlob":{"per_min":5473.0,"monthly":95.88696},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":193.0,"monthly":0.0}},"req_per_min":25988.0,"agents":5000,"monthly":4546.40496,"req":25988,"utc":"2026-11-08 02:12"},{"groups":{"PutBlob":{"per_min":20279.0,"monthly":4441.101},"ListBlobs":{"per_min":20021.0,"monthly":4384.599},"GetBlob":{"per_min":10421.0,"monthly":182.57592},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":193.0,"monthly":0.0}},"req_per_min":50914.0,"agents":10000,"monthly":9008.27592,"req":50914,"utc":"2026-11-08 02:20"},{"groups":{"PutBlob":{"per_min":20282.0,"monthly":4441.758},"ListBlobs":{"per_min":20016.0,"monthly":4383.504},"GetBlob":{"per_min":10463.0,"monthly":183.31176},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":192.0,"monthly":0.0}},"req_per_min":50953.0,"agents":10000,"monthly":9008.57376,"req":50953,"utc":"2026-11-08 02:21"},{"groups":{"PutBlob":{"per_min":20278.0,"monthly":4440.882},"ListBlobs":{"per_min":20014.0,"monthly":4383.066000000001},"GetBlob":{"per_min":10376.0,"monthly":181.78752},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":191.0,"monthly":0.0}},"req_per_min":50859.0,"agents":10000,"monthly":9005.73552,"req":50859,"utc":"2026-11-08 02:22"},{"groups":{"PutBlob":{"per_min":20247.0,"monthly":4434.093},"ListBlobs":{"per_min":19995.0,"monthly":4378.905000000001},"GetBlob":{"per_min":10429.0,"monthly":182.71608000000003},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":191.0,"monthly":0.0}},"req_per_min":50862.0,"agents":10000,"monthly":8995.714080000002,"req":50862,"utc":"2026-11-08 02:23"},{"groups":{"PutBlob":{"per_min":20299.0,"monthly":4445.481},"ListBlobs":{"per_min":20033.0,"monthly":4387.227},"GetBlob":{"per_min":10401.0,"monthly":182.22552},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":193.0,"monthly":0.0}},"req_per_min":50926.0,"agents":10000,"monthly":9014.93352,"req":50926,"utc":"2026-11-08 02:24"}],"rivet":[{"groups":{"PutBlob":{"per_min":698.0,"monthly":152.862},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":2956.0,"monthly":51.789120000000004},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3690.0,"agents":2000,"monthly":212.53511999999998,"req":3690,"utc":"2026-11-08 01:30"},{"groups":{"PutBlob":{"per_min":842.0,"monthly":184.398},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3526.0,"monthly":61.77552},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4404.0,"agents":2000,"monthly":254.05751999999998,"req":4404,"utc":"2026-11-08 01:31"},{"groups":{"PutBlob":{"per_min":668.0,"monthly":146.29199999999997},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":2880.0,"monthly":50.4576},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3584.0,"agents":2000,"monthly":204.6336,"req":3584,"utc":"2026-11-08 01:32"},{"groups":{"PutBlob":{"per_min":688.0,"monthly":150.672},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":2906.0,"monthly":50.913120000000006},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3630.0,"agents":2000,"monthly":209.46912,"req":3630,"utc":"2026-11-08 01:33"},{"groups":{"PutBlob":{"per_min":822.0,"monthly":180.018},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3451.0,"monthly":60.46152000000001},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4309.0,"agents":2000,"monthly":248.36352,"req":4309,"utc":"2026-11-08 01:34"},{"groups":{"PutBlob":{"per_min":686.0,"monthly":150.234},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":2929.0,"monthly":51.31608000000001},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3651.0,"agents":5000,"monthly":209.43408000000002,"req":3651,"utc":"2026-11-08 01:39"},{"groups":{"PutBlob":{"per_min":863.0,"monthly":188.997},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3734.0,"monthly":65.41968},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4633.0,"agents":5000,"monthly":262.30068,"req":4633,"utc":"2026-11-08 01:40"},{"groups":{"PutBlob":{"per_min":683.0,"monthly":149.577},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":2910.0,"monthly":50.983200000000004},"other":{"per_min":0.0,"monthly":0.0},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3629.0,"agents":5000,"monthly":208.4442,"req":3629,"utc":"2026-11-08 01:41"},{"groups":{"PutBlob":{"per_min":772.0,"monthly":169.06799999999998},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3454.0,"monthly":60.51408000000001},"other":{"per_min":24.0,"monthly":5.256000000000001},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4286.0,"agents":5000,"monthly":242.72208,"req":4286,"utc":"2026-11-08 01:42"},{"groups":{"PutBlob":{"per_min":768.0,"monthly":168.19199999999998},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3351.0,"monthly":58.709520000000005},"other":{"per_min":6.0,"monthly":1.3140000000000003},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4161.0,"agents":5000,"monthly":236.09952,"req":4161,"utc":"2026-11-08 01:43"},{"groups":{"PutBlob":{"per_min":803.0,"monthly":175.85699999999997},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3588.0,"monthly":62.86176},"other":{"per_min":27.0,"monthly":5.9129999999999985},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4454.0,"agents":10000,"monthly":252.51576,"req":4454,"utc":"2026-11-08 01:48"},{"groups":{"PutBlob":{"per_min":753.0,"monthly":164.907},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3604.0,"monthly":63.14207999999999},"other":{"per_min":45.0,"monthly":9.855},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4438.0,"agents":10000,"monthly":245.78807999999998,"req":4438,"utc":"2026-11-08 01:49"},{"groups":{"PutBlob":{"per_min":808.0,"monthly":176.952},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3684.0,"monthly":64.54368},"other":{"per_min":27.0,"monthly":5.9129999999999985},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":4555.0,"agents":10000,"monthly":255.29268000000002,"req":4555,"utc":"2026-11-08 01:50"},{"groups":{"PutBlob":{"per_min":679.0,"monthly":148.701},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":3146.0,"monthly":55.11792},"other":{"per_min":18.0,"monthly":3.9419999999999997},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":3879.0,"agents":10000,"monthly":215.64491999999998,"req":3879,"utc":"2026-11-08 01:51"},{"groups":{"PutBlob":{"per_min":914.0,"monthly":200.16600000000003},"ListBlobs":{"per_min":36.0,"monthly":7.8839999999999995},"GetBlob":{"per_min":5006.0,"monthly":87.70512000000001},"other":{"per_min":143.0,"monthly":30.914040000000007},"free":{"per_min":0.0,"monthly":0.0}},"req_per_min":6099.0,"agents":10000,"monthly":326.66916000000003,"req":6099,"utc":"2026-11-08 01:52"}]}}</script>
+<script>
+(function(){
+'use strict';
+const D=JSON.parse(document.getElementById('data').textContent);
+const NS='http://www.w3.org/2000/svg';
+const state={mode:'cost'};
+const fmtInt=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+
+function el(tag,attrs,parent){
+	const node=document.createElementNS(NS,tag);
+	for(const [key,value] of Object.entries(attrs||{}))node.setAttribute(key,value);
+	if(parent)parent.appendChild(node);
+	return node;
+}
+function text(parent,x,y,content,attrs){
+	const node=el('text',Object.assign({x,y},attrs||{}),parent);
+	node.textContent=content;
+	return node;
+}
+function money(v){
+	if(v>=100)return '$'+fmtInt.format(v);
+	return '$'+v.toFixed(2);
+}
+function compact(v,prefix){
+	prefix=prefix||'';
+	if(v>=1000){
+		const k=v/1000;
+		return prefix+(Number.isInteger(k)?k:k.toFixed(1))+'K';
+	}
+	return prefix+fmtInt.format(v);
+}
+function levelLabel(v){return v>=2000&&v%1000===0?(v/1000)+'K':fmtInt.format(v)}
+function valueText(v){return state.mode==='cost'?money(v)+'/mo':fmtInt.format(v)+'/min'}
+function axisText(v){return state.mode==='cost'?compact(v,'$'):compact(v)}
+function niceTicks(max,count){
+	if(!(max>0))max=1;
+	const raw=max/count;
+	const power=Math.pow(10,Math.floor(Math.log10(raw)));
+	const step=[1,2,2.5,5,10].map(f=>f*power).find(s=>s>=raw);
+	const ticks=[];
+	for(let v=0;v<=max+step*0.001;v+=step)ticks.push(v);
+	if(ticks[ticks.length-1]<max)ticks.push(ticks[ticks.length-1]+step);
+	return ticks;
+}
+
+/* Tooltips are built with textContent because labels come from data files. */
+function makeTip(container){
+	const tip=document.createElement('div');
+	tip.className='tip';
+	container.appendChild(tip);
+	return tip;
+}
+function fillTip(tip,title,rows,foot){
+	tip.replaceChildren();
+	const head=document.createElement('div');head.className='tt';head.textContent=title;tip.appendChild(head);
+	for(const row of rows){
+		const line=document.createElement('div');line.className='row';
+		const key=document.createElement('span');key.className='key';key.style.background=row.color;line.appendChild(key);
+		const value=document.createElement('b');value.textContent=row.value;line.appendChild(value);
+		const name=document.createElement('span');name.textContent=row.name;line.appendChild(name);
+		tip.appendChild(line);
+	}
+	if(foot){const f=document.createElement('div');f.className='foot';f.textContent=foot;tip.appendChild(f)}
+	tip.style.display='block';
+}
+function placeTip(tip,container,px,py){
+	const width=tip.offsetWidth,height=tip.offsetHeight,limit=container.clientWidth;
+	let left=px+14;
+	if(left+width>limit)left=Math.max(0,px-14-width);
+	tip.style.left=left+'px';
+	tip.style.top=Math.max(0,py-height/2)+'px';
+}
+
+function nodeBands(){
+	const bands=[];
+	D.levels.forEach((level,i)=>{
+		const last=bands[bands.length-1];
+		if(last&&last.nodes===level.nodes){last.to=i;return}
+		bands.push({nodes:level.nodes,from:i,to:i});
+	});
+	return bands.map((band,i)=>{
+		const start=i===0?0:(D.levels[band.from-1].agents+D.levels[band.from].agents)/2;
+		const end=i===bands.length-1?D.xmax:(D.levels[band.to].agents+D.levels[band.to+1].agents)/2;
+		return {nodes:band.nodes,start,end,shade:i%2===1};
+	});
+}
+
+function drawFrame(svg,x,y,top,bottom,left,right,ticks,showBandLabels){
+	for(const band of nodeBands()){
+		const x0=x(band.start),x1=x(band.end);
+		if(band.shade)el('rect',{x:x0,y:top,width:x1-x0,height:bottom-top,style:'fill:var(--band)'},svg);
+		if(showBandLabels&&x1-x0>58)text(svg,x0+6,top-8,band.nodes+' nodes',{style:'fill:var(--muted);font-size:11px'});
+	}
+	for(const tick of ticks){
+		el('line',{x1:left,x2:right,y1:y(tick),y2:y(tick),style:'stroke:var(--grid);stroke-width:1'},svg);
+		text(svg,left-8,y(tick)+4,axisText(tick),{'text-anchor':'end',style:'fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums'});
+	}
+	el('line',{x1:left,x2:right,y1:bottom,y2:bottom,style:'stroke:var(--axis);stroke-width:1'},svg);
+	const width=right-left;
+	const step=width<360?10000:5000;
+	for(let v=0;v<=D.xmax;v+=step){
+		text(svg,x(v),bottom+18,width<520?compact(v):fmtInt.format(v),{'text-anchor':'middle',style:'fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums'});
+	}
+	for(const level of D.levels)el('line',{x1:x(level.agents),x2:x(level.agents),y1:bottom,y2:bottom+4,style:'stroke:var(--muted);stroke-width:1'},svg);
+}
+
+function hoverLayer(svg,container,x,top,bottom,left,right,onShow,label){
+	const tip=makeTip(container);
+	const cross=el('line',{y1:top,y2:bottom,style:'stroke:var(--muted);stroke-width:1;display:none'},svg);
+	const hit=el('rect',{x:left,y:top,width:right-left,height:bottom-top,fill:'transparent'},svg);
+	let index=D.levels.length-1;
+	function show(i,py){
+		index=i;
+		const px=x(D.levels[i].agents);
+		cross.setAttribute('x1',px);cross.setAttribute('x2',px);cross.style.display='';
+		onShow(i,tip);
+		placeTip(tip,container,px,py===undefined?(top+bottom)/2:py);
+	}
+	function hide(){tip.style.display='none';cross.style.display='none'}
+	function nearest(px){
+		let best=0;
+		D.levels.forEach((level,i)=>{if(Math.abs(x(level.agents)-px)<Math.abs(x(D.levels[best].agents)-px))best=i});
+		return best;
+	}
+	hit.addEventListener('pointermove',event=>{
+		const box=svg.getBoundingClientRect();
+		show(nearest(event.clientX-box.left),event.clientY-box.top);
+	});
+	hit.addEventListener('pointerleave',hide);
+	svg.setAttribute('tabindex','0');
+	svg.setAttribute('aria-label',label);
+	svg.addEventListener('focus',()=>show(index));
+	svg.addEventListener('blur',hide);
+	svg.addEventListener('keydown',event=>{
+		if(event.key==='ArrowLeft'){show(Math.max(0,index-1));event.preventDefault()}
+		if(event.key==='ArrowRight'){show(Math.min(D.levels.length-1,index+1));event.preventDefault()}
+	});
+}
+
+function levelValue(level,platform){
+	const p=level[platform];
+	return state.mode==='cost'?p.monthly:p.req_per_min;
+}
+
+function renderScaling(){
+	const box=document.getElementById('chart-scaling');
+	box.replaceChildren();
+	const W=box.clientWidth,H=W<560?300:380;
+	const m={l:56,r:W<560?90:132,t:26,b:40};
+	const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:'img'},box);
+	const x=v=>m.l+v/D.xmax*(W-m.l-m.r);
+	const max=Math.max(...D.levels.flatMap(level=>D.platforms.map(p=>levelValue(level,p.key))));
+	const ticks=niceTicks(max,5);
+	const top=ticks[ticks.length-1];
+	const y=v=>H-m.b-v/top*(H-m.t-m.b);
+	drawFrame(svg,x,y,m.t,H-m.b,m.l,W-m.r,ticks,true);
+
+	const ends=[];
+	for(const platform of D.platforms){
+		const points=D.levels.map(level=>[x(level.agents),y(levelValue(level,platform.key))]);
+		el('polyline',{points:points.map(p=>p.join(',')).join(' '),fill:'none',style:`stroke:var(--${platform.key});stroke-width:2;stroke-linejoin:round;stroke-linecap:round`},svg);
+		for(const [px,py] of points)el('circle',{cx:px,cy:py,r:4,style:`fill:var(--${platform.key});stroke:var(--page);stroke-width:2`},svg);
+		const last=D.levels[D.levels.length-1];
+		ends.push({platform,x:points[points.length-1][0],y:points[points.length-1][1],value:levelValue(last,platform.key)});
+	}
+	ends.sort((a,b)=>a.y-b.y);
+	for(let i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<28)ends[i].y=ends[i-1].y+28;
+	const lowest=H-m.b-16;
+	for(let i=ends.length-1;i>=0;i--){
+		const limit=i===ends.length-1?lowest:ends[i+1].y-28;
+		if(ends[i].y>limit)ends[i].y=limit;
+	}
+	for(const end of ends){
+		text(svg,end.x+10,end.y-2,end.platform.short,{style:'fill:var(--ink2);font-size:12px'});
+		text(svg,end.x+10,end.y+13,valueText(end.value),{style:'fill:var(--ink);font-size:13px;font-weight:600'});
+	}
+
+	hoverLayer(svg,box,x,m.t,H-m.b,m.l,W-m.r,(i,tip)=>{
+		const level=D.levels[i];
+		const rows=D.platforms.map(p=>({color:`var(--${p.key})`,value:valueText(levelValue(level,p.key)),name:p.short}));
+		const values=D.platforms.map(p=>levelValue(level,p.key));
+		const ratio=values[0]/values[1];
+		const range=D.platforms.map(p=>`${p.short} ${money(level[p.key].monthly_min)}–${money(level[p.key].monthly_max)}`).join(' · ');
+		fillTip(tip,`${fmtInt.format(level.agents)} agents · ${level.nodes} nodes`,rows,`${D.platforms[0].short} ÷ ${D.platforms[1].short}: ${ratio.toFixed(1)}×`+(state.mode==='cost'?` · 1-minute range: ${range}`:''));
+	},'Line chart of monthly request cost against concurrent agents for both platforms');
+}
+
+function groupValue(entry,key){
+	const g=entry.groups[key];
+	return state.mode==='cost'?g.monthly:g.per_min;
+}
+function totalOf(entry){return D.groups.reduce((sum,g)=>sum+groupValue(entry,g.key),0)}
+
+function panelShell(parent,title,subtitle){
+	const panel=document.createElement('div');panel.className='panel';
+	const head=document.createElement('div');head.className='ptitle';
+	const h=document.createElement('h3');h.textContent=title;head.appendChild(h);
+	const s=document.createElement('span');s.textContent=subtitle;head.appendChild(s);
+	panel.appendChild(head);
+	const chart=document.createElement('div');chart.className='chart';panel.appendChild(chart);
+	parent.appendChild(panel);
+	return chart;
+}
+
+function renderBreakdown(){
+	const host=document.getElementById('chart-breakdown');
+	host.replaceChildren();
+	/* Both panels share one y-axis so their heights compare directly. */
+	const ticks=niceTicks(Math.max(...D.platforms.flatMap(p=>D.levels.map(level=>totalOf(level[p.key])))),4);
+	const top=ticks[ticks.length-1];
+	for(const platform of D.platforms){
+		const last=D.levels[D.levels.length-1];
+		const box=panelShell(host,platform.label,`${valueText(totalOf(last[platform.key]))} at ${fmtInt.format(last.agents)} agents`);
+		const W=box.clientWidth,H=280;
+		const m={l:48,r:W<420?12:118,t:12,b:36};
+		const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:'img'},box);
+		const x=v=>m.l+v/D.xmax*(W-m.l-m.r);
+		const y=v=>H-m.b-v/top*(H-m.t-m.b);
+		drawFrame(svg,x,y,m.t,H-m.b,m.l,W-m.r,ticks,false);
+
+		const cumulative=D.levels.map(()=>0);
+		const lastIndex=D.levels.length-1;
+		for(const group of D.groups){
+			const lower=cumulative.slice();
+			D.levels.forEach((level,i)=>{cumulative[i]+=groupValue(level[platform.key],group.key)});
+			if(cumulative.every((v,i)=>v===lower[i]))continue;
+			const upperPoints=D.levels.map((level,i)=>[x(level.agents),y(cumulative[i])]);
+			const lowerPoints=D.levels.map((level,i)=>[x(level.agents),y(lower[i])]).reverse();
+			el('polygon',{points:upperPoints.concat(lowerPoints).map(p=>p.join(',')).join(' '),style:`fill:var(--${group.color});fill-opacity:.32`},svg);
+			el('polyline',{points:upperPoints.map(p=>p.join(',')).join(' '),fill:'none',style:`stroke:var(--${group.color});stroke-width:2;stroke-linejoin:round`},svg);
+			const thickness=y(lower[lastIndex])-y(cumulative[lastIndex]);
+			if(W>=420&&thickness>=15){
+				const share=groupValue(D.levels[lastIndex][platform.key],group.key)/totalOf(D.levels[lastIndex][platform.key]);
+				text(svg,x(D.levels[lastIndex].agents)+8,(y(lower[lastIndex])+y(cumulative[lastIndex]))/2+4,`${group.label} ${Math.round(share*100)}%`,{style:'fill:var(--ink2);font-size:11px'});
+			}
+		}
+
+		hoverLayer(svg,box,x,m.t,H-m.b,m.l,W-m.r,(i,tip)=>{
+			const entry=D.levels[i][platform.key];
+			const total=totalOf(entry);
+			const rows=D.groups.slice().reverse().filter(g=>entry.groups[g.key].per_min>0).map(g=>{
+				const v=groupValue(entry,g.key);
+				return {color:`var(--${g.color})`,value:valueText(v),name:`${g.label}${total>0?` · ${Math.round(v/total*100)}%`:''}`};
+			});
+			fillTip(tip,`${platform.short} · ${fmtInt.format(D.levels[i].agents)} agents`,rows,`Total ${valueText(total)}`);
+		},`Stacked area chart of ${platform.short} request ${state.mode==='cost'?'cost':'counts'} by Azure API against concurrent agents`);
+	}
+}
+
+function renderMinutes(){
+	const host=document.getElementById('chart-minutes');
+	host.replaceChildren();
+	/* Both panels share one y-axis so their heights compare directly. */
+	const ticks=niceTicks(Math.max(...D.platforms.flatMap(p=>D.minutes[p.key].map(totalOf))),4);
+	const top=ticks[ticks.length-1];
+	for(const platform of D.platforms){
+		const minutes=D.minutes[platform.key];
+		const box=panelShell(host,platform.label,`${minutes.length} measured minutes`);
+		const W=box.clientWidth,H=230;
+		const m={l:48,r:8,t:10,b:34};
+		const svg=el('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':`Stacked columns of ${platform.short} requests by API for every measured minute`},box);
+		const levels=[];
+		for(const minute of minutes){
+			const last=levels[levels.length-1];
+			if(last&&last.agents===minute.agents)last.items.push(minute);
+			else levels.push({agents:minute.agents,items:[minute]});
+		}
+		const gapSlots=1.4;
+		const slots=minutes.length+gapSlots*(levels.length-1);
+		const slot=(W-m.l-m.r)/slots;
+		const barWidth=Math.max(1,Math.min(24,slot*0.72));
+		const y=v=>H-m.b-v/top*(H-m.t-m.b);
+		for(const tick of ticks){
+			el('line',{x1:m.l,x2:W-m.r,y1:y(tick),y2:y(tick),style:'stroke:var(--grid);stroke-width:1'},svg);
+			text(svg,m.l-8,y(tick)+4,axisText(tick),{'text-anchor':'end',style:'fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums'});
+		}
+		const tip=makeTip(box);
+		let position=0;
+		const groupWidth=slot*5;
+		levels.forEach((level,levelIndex)=>{
+			const start=m.l+position*slot;
+			const showLabel=groupWidth>=26||levelIndex%2===0||levelIndex===levels.length-1;
+			if(showLabel)text(svg,start+level.items.length*slot/2,H-m.b+16,levelLabel(level.agents),{'text-anchor':'middle',style:'fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums'});
+			level.items.forEach(minute=>{
+				const cx=m.l+(position+0.5)*slot;
+				let base=0;
+				for(const group of D.groups){
+					const v=groupValue(minute,group.key);
+					if(v<=0)continue;
+					const y0=y(base),y1=y(base+v);
+					const height=y0-y1;
+					const gap=height>4?1:0;
+					el('rect',{x:cx-barWidth/2,y:y1+gap,width:barWidth,height:Math.max(0.5,height-gap),style:`fill:var(--${group.color})`},svg);
+					base+=v;
+				}
+				const hit=el('rect',{x:cx-slot/2,y:m.t,width:slot,height:H-m.t-m.b,fill:'transparent'},svg);
+				hit.addEventListener('pointermove',event=>{
+					const total=totalOf(minute);
+					const rows=D.groups.slice().reverse().filter(g=>minute.groups[g.key].per_min>0).map(g=>({color:`var(--${g.color})`,value:valueText(groupValue(minute,g.key)),name:g.label}));
+					const foot=state.mode==='cost'?`Total ${valueText(total)} · ${fmtInt.format(minute.req)} requests`:`Total ${valueText(total)} · ${money(minute.monthly)}/mo equivalent`;
+					fillTip(tip,`${minute.utc} UTC · ${fmtInt.format(minute.agents)} agents`,rows,foot);
+					const box2=svg.getBoundingClientRect();
+					placeTip(tip,box,cx,event.clientY-box2.top);
+				});
+				hit.addEventListener('pointerleave',()=>{tip.style.display='none'});
+				position+=1;
+			});
+			position+=gapSlots;
+		});
+		el('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,style:'stroke:var(--axis);stroke-width:1'},svg);
+		text(svg,m.l,H-2,'Concurrent agents at each measured hold',{style:'fill:var(--muted);font-size:11px'});
+	}
+}
+
+function renderAll(){renderScaling();renderBreakdown();renderMinutes()}
+for(const control of document.querySelectorAll('.seg')){
+	control.addEventListener('click',event=>{
+		const button=event.target.closest('button');
+		if(!button)return;
+		state[control.dataset.control]=button.dataset.value;
+		for(const b of control.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b===button));
+		renderAll();
+	});
+}
+let width=document.documentElement.clientWidth;
+window.addEventListener('resize',()=>{
+	if(document.documentElement.clientWidth===width)return;
+	width=document.documentElement.clientWidth;
+	renderAll();
+});
+renderAll();
+})();
+</script>
+</body>
+</html>

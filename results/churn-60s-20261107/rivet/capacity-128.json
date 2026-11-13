@@ -1,0 +1,9 @@
+{
+  "platform": "rivet",
+  "after_agents": 128,
+  "started_ms": 1794088441746,
+  "finished_ms": 1794088445612,
+  "stored_bytes": 84997894,
+  "objects": 4190,
+  "method": "Azure Blob listing of the isolated benchmark prefix; outside measured holds"
+}

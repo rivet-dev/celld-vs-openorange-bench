@@ -1,0 +1,91 @@
+{
+  "pricing": {
+    "currency": "USD",
+    "hours_per_month": 730,
+    "get_head_per_1000": 0.0004,
+    "put_list_per_1000": 0.005,
+    "delete_per_1000": 0,
+    "storage_per_decimal_tb_month": 18.4
+  },
+  "results": [
+    {
+      "storage_sample_status": "measured_after_hold",
+      "stored_bytes": 8151093035,
+      "storage_monthly_usd": 0.14998011184399998,
+      "platform": "rivet",
+      "actors": 25000,
+      "start_ms": 1794109380000,
+      "end_ms": 1794109680000,
+      "writes": 750520,
+      "errors": 0,
+      "cost_usd": 0.0521848,
+      "monthly_usd": 457.138848,
+      "monthly_min_usd": 394.2175199999999,
+      "monthly_max_usd": 513.48492,
+      "requests": {
+        "GetBlob": 39781,
+        "PutBlob": 6216,
+        "ListBlobs": 720,
+        "PutBlock": 212,
+        "GetBlobProperties": 6,
+        "PutBlockList": 106,
+        "BatchRequest": 0,
+        "BatchDeleteBlob": 0,
+        "GetContainerProperties": 0,
+        "GetBlobServiceProperties": 0
+      },
+      "mean_connected": 24991.396666666667,
+      "completed_lifetimes": 124933,
+      "lifetime_min_ms": 60000.00018100004,
+      "lifetime_max_ms": 60178.742596999975,
+      "created_total": 223042,
+      "connection_retries": 0,
+      "node_count": 24,
+      "source_run": "churn-25k-24nodes-20261108",
+      "node_sizes": {
+        "Standard_D16as_v7": 12,
+        "Standard_D16ads_v7": 12
+      },
+      "stored_objects": 5976
+    },
+    {
+      "storage_sample_status": "measured_after_hold",
+      "stored_bytes": 552401569,
+      "storage_monthly_usd": 0.010164188869599999,
+      "platform": "celld",
+      "actors": 25000,
+      "start_ms": 1794110040000,
+      "end_ms": 1794110340000,
+      "writes": 750245,
+      "errors": 0,
+      "cost_usd": 2.5860502000000003,
+      "monthly_usd": 22653.799752000003,
+      "monthly_min_usd": 22615.744560000003,
+      "monthly_max_usd": 22670.43324,
+      "requests": {
+        "PutBlob": 255608,
+        "ListBlobs": 250491,
+        "GetBlob": 138888,
+        "BatchDeleteBlob": 3600,
+        "BatchRequest": 240,
+        "DeleteBlob": 0,
+        "GetBlobServiceProperties": 0,
+        "GetContainerProperties": 0,
+        "GetBlobProperties": 0
+      },
+      "mean_connected": 24973.693333333333,
+      "completed_lifetimes": 124843,
+      "lifetime_min_ms": 60000.00033499999,
+      "lifetime_max_ms": 60443.50963100005,
+      "created_total": 222671,
+      "connection_retries": 0,
+      "node_count": 24,
+      "source_run": "churn-25k-24nodes-20261108",
+      "node_sizes": {
+        "Standard_D16as_v7": 12,
+        "Standard_D16ads_v7": 12
+      },
+      "stored_objects": 444548
+    }
+  ]
+}

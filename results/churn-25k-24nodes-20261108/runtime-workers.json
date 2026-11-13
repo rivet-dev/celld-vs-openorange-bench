@@ -1,0 +1,149 @@
+{
+  "rivet_tokio_worker_threads": 1,
+  "nodes": {
+    "engine-1": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-2": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-3": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-4": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-5": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-6": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-7": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-8": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-9": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-10": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-11": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-12": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-13": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-14": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-15": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-16": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-17": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-18": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-19": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-20": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-21": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-22": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-23": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    },
+    "engine-24": {
+      "worker_labels": [
+        "0"
+      ],
+      "metric_series": 1
+    }
+  }
+}

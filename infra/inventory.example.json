@@ -1,0 +1,17 @@
+{
+  "resource_group": "my-benchmark",
+  "location": "eastus2",
+  "admin_user": "rivet",
+  "nodes": [
+    {"name":"engine-1","public_ip":"203.0.113.1","private_ip":"10.62.1.10","size":"Standard_D16as_v7"},
+    {"name":"engine-2","public_ip":"203.0.113.2","private_ip":"10.62.1.11","size":"Standard_D16as_v7"},
+    {"name":"engine-3","public_ip":"203.0.113.3","private_ip":"10.62.1.12","size":"Standard_D16as_v7"},
+    {"name":"engine-4","public_ip":"203.0.113.4","private_ip":"10.62.1.13","size":"Standard_D16as_v7"},
+    {"name":"engine-5","public_ip":"203.0.113.5","private_ip":"10.62.1.14","size":"Standard_D16as_v7"},
+    {"name":"engine-6","public_ip":"203.0.113.6","private_ip":"10.62.1.15","size":"Standard_D16as_v7"}
+  ],
+  "loadgens": [
+    {"name":"loadgen-1","public_ip":"203.0.113.7","private_ip":"10.62.1.70","size":"Standard_D8as_v7"},
+    {"name":"loadgen-2","public_ip":"203.0.113.8","private_ip":"10.62.1.71","size":"Standard_D8as_v7"}
+  ]
+}

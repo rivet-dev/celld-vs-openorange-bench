@@ -1,0 +1,582 @@
+{
+  "timespan": "2026-11-08T03:38:00Z/2026-11-08T03:49:00Z",
+  "interval": "PT1M",
+  "metrics": [
+    {
+      "name": "Transactions",
+      "unit": "Count",
+      "timeseries": [
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 2505.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 3738.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 4927.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 6235.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 6407.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 8970.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 7258.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 6801.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 8569.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 8183.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 7946.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "GetBlob"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 61.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 606.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 528.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 868.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 916.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 1351.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 1181.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 1109.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 1297.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 1278.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 1216.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "PutBlob"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 49.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 294.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 145.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 144.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 144.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "ListBlobs"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 30.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 48.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 88.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 8.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 2.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 64.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 50.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 46.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "PutBlock"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 216.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 1.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 3.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 2.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "GetBlobProperties"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 15.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 24.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 44.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 4.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 1.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 32.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 25.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 23.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "PutBlockList"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 64.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "BatchRequest"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 64.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "BatchDeleteBlob"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "GetContainerProperties"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "timeStamp": "2026-11-08T03:38:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:39:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:40:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:41:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:42:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:43:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:44:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:45:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:46:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:47:00Z",
+              "total": 0.0
+            },
+            {
+              "timeStamp": "2026-11-08T03:48:00Z",
+              "total": 0.0
+            }
+          ],
+          "metadatavalues": [
+            {
+              "name": {
+                "localizedValue": "apiname",
+                "value": "apiname"
+              },
+              "value": "GetBlobServiceProperties"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
