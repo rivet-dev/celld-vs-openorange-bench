@@ -16,5 +16,6 @@ variable "node_count" {
   }
 }
 variable "loadgen_size" { default = "Standard_D8as_v7" }
-variable "node_zones" { default = ["1", "1", "1", "1", "1", "1"] }
+# Nodes are placed round-robin across these zones (element() wraps for 12 or 24 nodes).
+variable "node_zones" { default = ["1", "2", "3"] }
 variable "image_version" { default = "0.20261017.2634" }

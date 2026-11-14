@@ -65,7 +65,9 @@ charges are outside this comparison.
 ## Hardware
 
 Six nodes through 10,000 agents; twelve at 15,000 and 20,000; twenty-four at
-25,000. Both platforms use the same machines at each level, in eastus2 zone 1.
+25,000. Both platforms use the same machines at each level. The Terraform spreads the nodes
+across eastus2 zones 1, 2 and 3; the included results were measured with every node in zone 1.
+Zone placement changes replication traffic between nodes, not object-store requests.
 Every node has 16 vCPUs, 64 GB RAM and the same AMD EPYC 9V45 CPU model, plus a
 1 TiB Premium SSD v2 data disk configured for 20,000 IOPS / 900 MB/s.
 
